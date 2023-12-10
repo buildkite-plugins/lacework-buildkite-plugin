@@ -1,0 +1,22 @@
+name: Lacework Image Evaluator
+description: Detects behaviors to find unknown threats through a patented form of behavioral analytics
+author: https://github.com/buildkite-plugins
+requirements:
+  - curl
+configuration:
+  properties:
+    access-token-var:
+      type: string
+    account-name:
+      type: string
+    cli-updates:
+      type: string
+    image-name:
+      type: string
+    image-tag:
+      type: string
+  required:
+    - account-name
+    - image-name
+    - image-tag
+  additionalProperties: false
