@@ -4,7 +4,7 @@ A Buildkite plugin that integrates with [Lacework](https://www.lacework.com/).
 
 ## Configuration
 
-It's necesary to have the [Lacework CLI](https://docs.lacework.net/cli/) installed in order to send the metadata schema output into the Lacework UI so you can see the results, and the component to use. Currently, the plugin only supports the `sca` component.
+It's necesary to have the [Lacework CLI](https://docs.lacework.net/cli/) installed in order to send the metadata schema output into the Lacework UI so you can see the results. Also, the necessary components must be installed as well. Currently, the plugin only supports the `sca` component.
 
 You should add the secrets `LW_API_KEY` and `LW_API_SECRET` into your secret manager or environment hook. The value for these secrets can be obtained by following the instructions [here](https://docs.lacework.net/console/api-access-keys) to create an API key and then download it.
 
