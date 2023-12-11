@@ -41,8 +41,10 @@ Default: `default`
 
 To perfom a Software Component Analysis:
 
+```yaml
 steps:
   - label: "🔨 Analysis"
     plugins:
       - lacework#v1.0.0:
           account-name: "mycompany"
+```
