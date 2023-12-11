@@ -4,7 +4,8 @@ A Buildkite plugin that integrates with [Lacework](https://www.lacework.com/) im
 
 ## Configuration
 
-It's necesary to have the [Lacework CLI](https://docs.lacework.net/cli/) installed in order to send the metadata schema output into the Lacework UI so you can see the results, and the component to use.
+It's necesary to have the [Lacework CLI](https://docs.lacework.net/cli/) installed in order to send the metadata schema output into the Lacework UI so you can see the results, and the component to use. Currently, the plugin only supports the `sca` component.
+You should add the secrets `LW_API_KEY` and `LW_API_SECRET` into your secret manager or environment hook. The value for these secrets can be obtained by following the instructions [here](https://docs.lacework.net/console/api-access-keys) to create an API key and then download it.
 
 These are the available configuration options for the plugin.
 
@@ -21,58 +22,12 @@ Your Lacework account name. If your login URL is "mycompany.lacework.net", then 
 Name of the environment variable that contains the authorization token associated with your Lacework account.
 Default: `LW_API_KEY`
 
-#### `component` (string)
+#### `api-key-secret-env-var` (string)
 
-Name of the Lacework component to use.
+Name of the environment variable that contains the api secret associated with your Lacework account.
+Default: `LW_API_SECRET`
 
+#### `profile` (string)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#### `image-name` (string)
-
-The image name to be evaluated
-
-#### `image-tag` (string)
-
-The tag for the image to evaluate.
-
-### Optional
-
-#### `access-token-var` (string)
-
-The name of the environment variable that contains the authorization token associated with your Lacework account.
-Default: `LW_ACCESS_TOKEN`
-
-#### `cli-updates` (boolean)
-
-Enable this option of the CLI tool to check for available new versions of itself and display a message if there are.
-Default: `false`
-
+When you run a command, you can specify a `--profile name`` and use the credentials and settings stored under that name.
+Default: `default`

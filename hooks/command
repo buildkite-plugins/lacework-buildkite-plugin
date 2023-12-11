@@ -1,0 +1,41 @@
+#!/bin/bash
+set -euo pipefail
+
+DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+# shellcheck source=lib/plugin.bash
+source "${DIR}/../lib/plugin.bash"
+
+CMD=(
+    lacework
+    sca scan
+    --save-results
+)
+
+# required options
+LW_ACCOUNT_NAME="$(plugin_read_config ACCOUNT_NAME)"
+
+if [ -z "${LW_ACCOUNT_NAME}" ]; then
+    echo "ERROR: Missing required config 'account_name'" >&2
+    exit 1
+fi
+
+if [ -n "$(plugin_read_config PROFILE '')" ]; then
+    CMD+=(
+        --profile "$(plugin_read_config PROFILE)"
+    )
+fi
+
+CMD+=(
+    --account "${LW_ACCOUNT_NAME}"
+)
+
+API_KEY_ENV_VAR="$(plugin_read_config API_KEY_ENV_VAR LW_API_KEY)"
+API_KEY_SECRET_ENV_VAR="$(plugin_read_config API_KEY_SECRET_ENV_VAR LW_API_SECRET)"
+
+
+CMD+=(
+    --api_key "${!API_KEY_ENV_VAR}"
+    --api_secret "${!API_KEY_SECRET_ENV_VAR}"
+)
+
+"${CMD[@]}" .

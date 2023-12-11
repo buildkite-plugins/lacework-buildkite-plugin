@@ -1,22 +1,18 @@
-name: Lacework Image Evaluator
+name: Lacework Code Security
 description: Detects behaviors to find unknown threats through a patented form of behavioral analytics
 author: https://github.com/buildkite-plugins
 requirements:
-  - curl
+  - lacework
 configuration:
   properties:
-    access-token-var:
-      type: string
     account-name:
       type: string
-    cli-updates:
+    api-key-env-var:
       type: string
-    image-name:
+    api-key-secret-env-var:
       type: string
-    image-tag:
+    profile:
       type: string
   required:
     - account-name
-    - image-name
-    - image-tag
   additionalProperties: false
