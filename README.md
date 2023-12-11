@@ -34,7 +34,7 @@ Default: `LW_API_SECRET`
 
 When you run a command, you can specify a `--profile name`` and use the credentials and settings stored under that name.
 
-Default: `default`
+Default: `""` (use the Lacework CLI default profile)
 
 
 ## Examples
