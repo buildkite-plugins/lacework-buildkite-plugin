@@ -1,6 +1,6 @@
 # Lacework Buildkite Plugin
 
-A Buildkite plugin that integrates with [Lacework](https://www.lacework.com/) image evaluation.
+A Buildkite plugin that integrates with [Lacework](https://www.lacework.com/).
 
 ## Configuration
 
