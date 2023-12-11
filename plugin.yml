@@ -1,0 +1,18 @@
+name: Lacework Code Security
+description: Detects behaviors to find unknown threats through a patented form of behavioral analytics
+author: https://github.com/buildkite-plugins
+requirements:
+  - lacework
+configuration:
+  properties:
+    account-name:
+      type: string
+    api-key-env-var:
+      type: string
+    api-key-secret-env-var:
+      type: string
+    profile:
+      type: string
+  required:
+    - account-name
+  additionalProperties: false
