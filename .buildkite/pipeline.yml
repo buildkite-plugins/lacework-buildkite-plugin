@@ -16,3 +16,4 @@ steps:
           files:
             - hooks/**
             - lib/**
+            - tests/**
