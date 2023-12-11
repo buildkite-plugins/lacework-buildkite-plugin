@@ -4,6 +4,8 @@ A Buildkite plugin that integrates with [Lacework](https://www.lacework.com/) im
 
 ## Configuration
 
+It's necesary to have the [Lacework CLI](https://docs.lacework.net/cli/) installed in order to send the metadata schema output into the Lacework UI so you can see the results, and the component to use.
+
 These are the available configuration options for the plugin.
 
 ### Required
@@ -11,6 +13,48 @@ These are the available configuration options for the plugin.
 #### `account-name` (string)
 
 Your Lacework account name. If your login URL is "mycompany.lacework.net", then the account name should be `mycompany`.
+
+### Optional
+
+#### `api-key-env-var` (string)
+
+Name of the environment variable that contains the authorization token associated with your Lacework account.
+Default: `LW_API_KEY`
+
+#### `component` (string)
+
+Name of the Lacework component to use.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### `image-name` (string)
 
