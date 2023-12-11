@@ -35,3 +35,14 @@ Default: `LW_API_SECRET`
 When you run a command, you can specify a `--profile name`` and use the credentials and settings stored under that name.
 
 Default: `default`
+
+
+## Examples
+
+To perfom a Software Component Analysis:
+
+steps:
+  - label: "🔨 Analysis"
+    plugins:
+      - lacework#v1.0.0:
+          account-name: "mycompany"

@@ -16,7 +16,7 @@ setup() {
   run "${PWD}"/hooks/command
 
   assert_failure
-  refute_output --partial 'nothing'
+  refute_output --partial 'unbound variable'
   unstub lacework
 }
 
@@ -26,7 +26,7 @@ setup() {
   run "${PWD}"/hooks/command
 
   assert_failure
-  assert_output --partial ''
+  assert_output --partial 'unbound variable'
 }
 
 @test "Error if no account name was set" {
