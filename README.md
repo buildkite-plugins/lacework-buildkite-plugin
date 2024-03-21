@@ -1,4 +1,4 @@
-# Lacework Buildkite Plugin
+# Lacework Buildkite Plugin [![Build status](https://badge.buildkite.com/9f3a0547e51013ba853112588042c39f081fc09937ddae031f.svg)](https://buildkite.com/buildkite/plugins-lacework)
 
 A Buildkite plugin that integrates with [Lacework](https://www.lacework.com/).
 
