@@ -1,16 +1,22 @@
 steps:
   - label: ":shell: Tests"
+    agents:
+      queue: "hosted"
     plugins:
       - plugin-tester#v1.1.1:
           folders:
             - tests
 
   - label: ":sparkles: Lint"
+    agents:
+      queue: "hosted"
     plugins:
       - plugin-linter#v3.3.0:
           id: lacework
 
   - label: ":shell: Shellcheck"
+    agents:
+      queue: "hosted"
     plugins:
       - shellcheck#v1.3.0:
           files:
