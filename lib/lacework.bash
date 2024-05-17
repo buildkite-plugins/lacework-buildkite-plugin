@@ -38,6 +38,7 @@ function configure_plugin() {
 
     export PROFILE="${BUILDKITE_PLUGIN_LACEWORK_PROFILE:-}" 
 
+    #if profile is defined locally, use that if the buildkite environment variable is absent - not applicable for vuln scans
     if [ -z "${API_KEY_ENV_VAR}" ] || [ -z "${API_KEY_SECRET_ENV_VAR}" ]; then
         if [ -z "${PROFILE}" ] && [ "${SCAN_TYPE}" != "vulnerability" ]; then
             echo "ERROR: Missing Lacework API Key and Secret or profile" >&2
