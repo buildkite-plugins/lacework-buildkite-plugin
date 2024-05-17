@@ -194,7 +194,6 @@ function lacework_iac() {
     fi  
 
 
-    echo "${CMD[@]}"
 
     "${CMD[@]}" 
 }
