@@ -1,5 +1,5 @@
 name: Lacework 
-description: Find vulnerabilities and misconfigurations in your builds early in the development process.
+description:  Secure your cloud from build to run time and respond effectively with risk and threat insights
 author: https://github.com/erikwennerberg
 requirements:
   - lacework
