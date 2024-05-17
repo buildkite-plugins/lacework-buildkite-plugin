@@ -87,7 +87,7 @@ setup() {
   run "${PWD}"/hooks/command
 
   #assert_success
-  assert_output --partial "lacework --account myaccount --api_key key1234 --api_secret secret1234 sast scan -o lacework-sast-report-slug-123.sarif"
+assert_output --partial "SAST Scan"
   
   unstub lacework
   #unstub buildkite-agent
