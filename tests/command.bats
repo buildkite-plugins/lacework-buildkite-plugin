@@ -166,22 +166,3 @@ setup() {
   
   unstub lacework
 }
-
-#@test 'Lacework VULN SCAN with fail' {
-
-  #BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='vulnerability'
-  #export BUILDKITE_PLUGIN_LACEWORK_ACCESS_TOKEN_ENV_VAR='mytoken1234'
-  #export BUILDKITE_PLUGIN_LACEWORK_VULNERABILITY_SCAN_REPOSITORY='myrepo'
-  #export BUILDKITE_PLUGIN_LACEWORK_VULNERABILITY_SCAN_TAG='latest'
-  #export BUILDKITE_PLUGIN_LACEWORK_FAIL_LEVEL='critical'
-
-  #stub lacework \
-  #"--account-name myaccount --access-token mytoken1234 vuln-scanner -s image evaluate myrepo latest --policy --critical-violation-exit-code 1 : echo 'Vuln Scan w failure'"
-
-  #run "${PWD}"/hooks/command
-
-  #assert_failure
-  #assert_output --partial "latest --policy --critical-violation-exit-code 1"
-  
-  #unstub lacework
-#}
