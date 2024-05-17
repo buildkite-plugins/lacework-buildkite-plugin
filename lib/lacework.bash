@@ -127,7 +127,6 @@ function lacework_sca() {
     )
         
 
-    echo "${CMD[@]}"
 
     "${CMD[@]}" 
 }
@@ -163,7 +162,6 @@ function lacework_sast() {
 
     echo "${CMD[@]}"
 
-    "${CMD[@]}" 
 
     annotate_and_upload_build_sast "${SARIF_ARTIFACT}"
 }
@@ -195,7 +193,6 @@ function lacework_iac() {
     fi  
 
 
-    echo "${CMD[@]}"
 
     "${CMD[@]}" 
 }
@@ -236,7 +233,6 @@ function lacework_vulnerability() {
     fi  
 
     
-    echo "${CMD[@]}"
 
     "${CMD[@]}"
 }

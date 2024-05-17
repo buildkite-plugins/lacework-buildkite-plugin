@@ -1,6 +1,6 @@
 name: Lacework 
 description:  Secure your cloud from build to run time and respond effectively with risk and threat insights
-author: https://github.com/erikwennerberg
+author: https://github.com/buildkite-plugins
 requirements:
   - lacework
   - docker
