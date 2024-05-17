@@ -162,7 +162,6 @@ function lacework_sast() {
 
     echo "${CMD[@]}"
 
-    "${CMD[@]}" 
 
     annotate_and_upload_build_sast "${SARIF_ARTIFACT}"
 }
