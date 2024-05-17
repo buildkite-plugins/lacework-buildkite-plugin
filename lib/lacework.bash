@@ -233,7 +233,6 @@ function lacework_vulnerability() {
     fi  
 
     
-    echo "${CMD[@]}"
 
     "${CMD[@]}"
 }
