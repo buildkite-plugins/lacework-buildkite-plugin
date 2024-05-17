@@ -126,7 +126,6 @@ function lacework_sca() {
     )
         
 
-    echo "${CMD[@]}"
 
     "${CMD[@]}" 
 }
