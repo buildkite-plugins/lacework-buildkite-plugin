@@ -1,6 +1,6 @@
 name: Lacework 
 description: Find vulnerabilities and misconfigurations in your builds early in the development process.
-author: https://github.com/erikwennerberg
+author: https://github.com/buildkite-plugins
 requirements:
   - lacework
   - docker
