@@ -22,21 +22,21 @@ function configure_plugin() {
     fi
 
     #other options
-    
+
     export API_KEY_ENV_VAR="${BUILDKITE_PLUGIN_LACEWORK_API_KEY_ENV_VAR:-}"
 
     export API_KEY_SECRET_ENV_VAR="${BUILDKITE_PLUGIN_LACEWORK_API_KEY_SECRET_ENV_VAR:-}"
 
     #if LW_API_KEY is defined locally, use that if the buildkite environment variable is absent
-    if [ -z "${API_KEY_ENV_VAR}"  ]; then
-         export API_KEY_ENV_VAR="${LW_API_KEY:-}" 
+    if [ -z "${API_KEY_ENV_VAR}" ]; then
+        export API_KEY_ENV_VAR="${LW_API_KEY:-}"
     fi
     #if LW_API_SECRET is defined locally, use that if the buildkite environment variable is absent
-    if [ -z "${API_KEY_SECRET_ENV_VAR}"  ]; then
-         export API_KEY_SECRET_ENV_VAR="${LW_API_SECRET:-}" 
+    if [ -z "${API_KEY_SECRET_ENV_VAR}" ]; then
+        export API_KEY_SECRET_ENV_VAR="${LW_API_SECRET:-}"
     fi
 
-    export PROFILE="${BUILDKITE_PLUGIN_LACEWORK_PROFILE:-}" 
+    export PROFILE="${BUILDKITE_PLUGIN_LACEWORK_PROFILE:-}"
 
     #if profile is defined locally, use that if the buildkite environment variable is absent - not applicable for vuln scans
     if [ -z "${API_KEY_ENV_VAR}" ] || [ -z "${API_KEY_SECRET_ENV_VAR}" ]; then
@@ -47,8 +47,6 @@ function configure_plugin() {
         fi
     fi
 
-    
-
     # need to export the below ENV variables for IAC to work since you can't pass those via CLI
     if [ "${SCAN_TYPE}" == "iac" ]; then
         export IAC_SCAN_TYPE="${BUILDKITE_PLUGIN_LACEWORK_IAC_SCAN_TYPE:-}"
@@ -56,7 +54,7 @@ function configure_plugin() {
         export LW_API_KEY="${API_KEY_ENV_VAR}"
         export LW_API_SECRET="${API_KEY_SECRET_ENV_VAR}"
 
-        if [ -z "${IAC_SCAN_TYPE}" ] || [ -z "${LW_ACCOUNT}" ] ||  [ -z "${LW_API_KEY}" ] ||  [ -z "${LW_API_SECRET}" ]; then
+        if [ -z "${IAC_SCAN_TYPE}" ] || [ -z "${LW_ACCOUNT}" ] || [ -z "${LW_API_KEY}" ] || [ -z "${LW_API_SECRET}" ]; then
             if [ -z "${PROFILE}" ]; then
                 echo "ERROR: Missing config related to IAC scans. Need the following: IAC_SCAN_TYPE, LW_ACCOUNT, LW_API_KEY, LW_API_SECRET" >&2
                 exit 1
@@ -82,31 +80,30 @@ function configure_plugin() {
 # Lacework Scans based on the provided scan tool
 function lacework_scan() {
     case "${SCAN_TYPE}" in
-        sca)
+    sca)
         lacework_sca
         ;;
 
-        iac)
+    iac)
         lacework_iac
         ;;
 
-        vulnerability)
+    vulnerability)
         lacework_vulnerability
         ;;
 
-        sast)
+    sast)
         lacework_sast
         ;;
     esac
 }
-
 
 function lacework_sca() {
 
     echo "--- Running Lacework SCA scan"
 
     CMD=(
-    lacework
+        lacework
     )
 
     if [ -n "$PROFILE" ]; then
@@ -115,20 +112,18 @@ function lacework_sca() {
         )
     else
         CMD+=(
-        --account "${ACCOUNT_NAME}"
-        --api_key "${API_KEY_ENV_VAR}"
-        --api_secret "${API_KEY_SECRET_ENV_VAR}"
-    )
-    fi  
+            --account "${ACCOUNT_NAME}"
+            --api_key "${API_KEY_ENV_VAR}"
+            --api_secret "${API_KEY_SECRET_ENV_VAR}"
+        )
+    fi
 
     CMD+=(
         sca scan .
         --save-results
     )
-        
 
-
-    "${CMD[@]}" 
+    "${CMD[@]}"
 }
 
 function lacework_sast() {
@@ -136,7 +131,7 @@ function lacework_sast() {
     echo "--- Running Lacework SAST scan"
 
     CMD=(
-    lacework
+        lacework
     )
 
     if [ -n "$PROFILE" ]; then
@@ -145,23 +140,19 @@ function lacework_sast() {
         )
     else
         CMD+=(
-        --account "${ACCOUNT_NAME}"
-        --api_key "${API_KEY_ENV_VAR}"
-        --api_secret "${API_KEY_SECRET_ENV_VAR}"
+            --account "${ACCOUNT_NAME}"
+            --api_key "${API_KEY_ENV_VAR}"
+            --api_secret "${API_KEY_SECRET_ENV_VAR}"
         )
-    fi  
-
-    
+    fi
 
     SARIF_ARTIFACT="lacework-sast-report-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_NUMBER}.sarif"
 
     CMD+=(
         sast scan -o "${SARIF_ARTIFACT}"
     )
-        
 
-"${CMD[@]}"
-
+    "${CMD[@]}"
 
     annotate_and_upload_build_sast "${SARIF_ARTIFACT}"
 }
@@ -171,9 +162,8 @@ function lacework_iac() {
     echo "--- Running Lacework IAC scan"
 
     CMD=(
-    lacework
+        lacework
     )
-
 
     CMD+=(
         iac
@@ -181,20 +171,18 @@ function lacework_iac() {
     )
 
     if [ -n "$PROFILE" ]; then
-    CMD+=(
-        --iac-profile "$PROFILE"
-    )
-    fi  
+        CMD+=(
+            --iac-profile "$PROFILE"
+        )
+    fi
 
     if [ -n "$FAIL_LEVEL" ]; then
-    CMD+=(
-        --fail "$FAIL_LEVEL"
-    )
-    fi  
+        CMD+=(
+            --fail "$FAIL_LEVEL"
+        )
+    fi
 
-
-
-    "${CMD[@]}" 
+    "${CMD[@]}"
 }
 
 function lacework_vulnerability() {
@@ -202,7 +190,7 @@ function lacework_vulnerability() {
     echo "--- Running Lacework Container Vulnerability scan"
 
     CMD=(
-    lacework
+        lacework
     )
 
     if [ -n "$PROFILE" ]; then
@@ -213,7 +201,7 @@ function lacework_vulnerability() {
         CMD+=(
             --account-name "${ACCOUNT_NAME}"
         )
-    fi  
+    fi
 
     #access token can't be passed via profile so we still need to pass it below
     CMD+=(
@@ -222,34 +210,32 @@ function lacework_vulnerability() {
 
     CMD+=(
         vuln-scanner -s image evaluate
-        "${VULNERABILITY_SCAN_REPOSITORY}"  
+        "${VULNERABILITY_SCAN_REPOSITORY}"
         "${VULNERABILITY_SCAN_TAG}"
     )
 
     if [ -n "$FAIL_LEVEL" ]; then
-    CMD+=(
-        "--policy --$FAIL_LEVEL-violation-exit-code 1"
-    )
-    fi  
-
-    
+        CMD+=(
+            "--policy --$FAIL_LEVEL-violation-exit-code 1"
+        )
+    fi
 
     "${CMD[@]}"
 }
-
 
 # format the output into an annotation with a link to the LW trial if credentials are missing
 function annotate_build_no_token() {
 
     style="error"
-    
-    annotation=$(cat << EOF
+
+    annotation=$(
+        cat <<EOF
    <h3>Lacework scan</h3>
    <p>Lacework needs an account, tenant or token. If you need to start a trial click on the link below. </p>
     <a href=https://aws.amazon.com/marketplace/pp/prodview-wcor2dssgwok6>Start a Lacework trial</a>
 EOF
-)
-   
+    )
+
     buildkite-agent annotate "${annotation}" --style "${style}" --context "lacework"
 }
 
@@ -262,12 +248,13 @@ function annotate_and_upload_build_sast() {
     style="success"
     message="<p>Lacework code scan completed and uploaded the results as a SARIF build artifact.</p>"
 
-    annotation=$(cat << EOF
+    annotation=$(
+        cat <<EOF
    <h3>Lacework SAST Scan</h3>
    ${message}
     <a href=artifact://${sarif_artifact}>View Complete Scan Result</a>
 EOF
-)
-   
+    )
+
     buildkite-agent annotate "${annotation}" --style "${style}" --context "lacework-sast"
 }

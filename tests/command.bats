@@ -9,10 +9,9 @@ setup() {
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='sca'
 }
 
-
 @test 'Missing  API key environment variable' {
   unset BUILDKITE_PLUGIN_LACEWORK_API_KEY_ENV_VAR
- 
+
   run "${PWD}"/hooks/command
 
   assert_failure
@@ -27,10 +26,8 @@ setup() {
 
   assert_failure
   assert_output --partial 'ERROR: Missing Lacework API Key and Secret'
-  
+
 }
-
-
 
 @test "Error if no account name was set" {
   unset BUILDKITE_PLUGIN_LACEWORK_ACCOUNT_NAME
@@ -47,29 +44,28 @@ setup() {
 
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='sca'
   stub lacework \
-  "--profile default sca scan . --save-results : echo 'SCA Scan'"
+    "--profile default sca scan . --save-results : echo 'SCA Scan'"
 
   run "${PWD}"/hooks/command
 
   assert_success
 
   unstub lacework
-  
+
 }
 
 @test 'Lacework SCA SCAN' {
 
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='sca'
   stub lacework \
-  "--account myaccount --api_key key1234 --api_secret secret1234 sca scan . --save-results : echo 'SCA Scan'"
+    "--account myaccount --api_key key1234 --api_secret secret1234 sca scan . --save-results : echo 'SCA Scan'"
 
   run "${PWD}"/hooks/command
 
   assert_success
-  
+
   unstub lacework
 }
-
 
 @test 'Lacework SAST SCAN' {
 
@@ -79,7 +75,7 @@ setup() {
   export BUILDKITE_BUILD_NUMBER='123'
 
   stub lacework \
-  "--account myaccount --api_key key1234 --api_secret secret1234 sast scan -o lacework-sast-report-slug-123.sarif : echo 'SAST Scan'"
+    "--account myaccount --api_key key1234 --api_secret secret1234 sast scan -o lacework-sast-report-slug-123.sarif : echo 'SAST Scan'"
 
   #stub buildkite-agent \
   #"artifact upload  lacework-sast-report-slug-123.sarif : echo 'SAST Scan Artifact'"
@@ -87,38 +83,34 @@ setup() {
   run "${PWD}"/hooks/command
 
   #assert_success
-assert_output --partial "SAST Scan"
-  
+  assert_output --partial "SAST Scan"
+
   unstub lacework
   #unstub buildkite-agent
 }
 
-
 @test 'Lacework IAC SCAN missing IAC scan type' {
 
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='iac'
- 
+
   run "${PWD}"/hooks/command
 
   assert_failure
   assert_output --partial "ERROR: Missing config related to IAC scans."
 }
 
-
 @test 'Lacework IAC SCAN' {
 
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='iac'
   export BUILDKITE_PLUGIN_LACEWORK_IAC_SCAN_TYPE='kubernetes-scan'
 
-
-
   stub lacework \
-  "iac kubernetes-scan : echo 'IAC Scan'"
+    "iac kubernetes-scan : echo 'IAC Scan'"
 
   run "${PWD}"/hooks/command
 
   assert_success
-  
+
   unstub lacework
 }
 
@@ -128,14 +120,13 @@ assert_output --partial "SAST Scan"
   export BUILDKITE_PLUGIN_LACEWORK_IAC_SCAN_TYPE='kubernetes-scan'
   export BUILDKITE_PLUGIN_LACEWORK_FAIL_LEVEL='critical'
 
-
   stub lacework \
-  "iac kubernetes-scan --fail critical : echo 'IAC Scan'"
+    "iac kubernetes-scan --fail critical : echo 'IAC Scan'"
 
   run "${PWD}"/hooks/command
 
   assert_success
-  
+
   unstub lacework
 }
 
@@ -146,8 +137,8 @@ assert_output --partial "SAST Scan"
   run "${PWD}"/hooks/command
 
   assert_failure
-  
- assert_output --partial "ERROR: Missing config related to vulnerability scans"
+
+  assert_output --partial "ERROR: Missing config related to vulnerability scans"
 }
 
 @test 'Lacework VULN SCAN' {
@@ -158,11 +149,11 @@ assert_output --partial "SAST Scan"
   export BUILDKITE_PLUGIN_LACEWORK_VULNERABILITY_SCAN_TAG='latest'
 
   stub lacework \
-  "--account-name myaccount --access-token mytoken1234 vuln-scanner -s image evaluate myrepo latest : echo 'Vuln Scan'"
+    "--account-name myaccount --access-token mytoken1234 vuln-scanner -s image evaluate myrepo latest : echo 'Vuln Scan'"
 
   run "${PWD}"/hooks/command
 
   assert_success
-  
+
   unstub lacework
 }
