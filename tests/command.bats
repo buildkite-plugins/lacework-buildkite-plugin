@@ -1,5 +1,8 @@
 #!/usr/bin/env bats
 
+# export LACEWORK_STUB_DEBUG=/dev/tty
+# export BUILDKITE_AGENT_STUB_DEBUG=/dev/tty
+
 setup() {
   load "$BATS_PLUGIN_PATH/load.bash"
 
