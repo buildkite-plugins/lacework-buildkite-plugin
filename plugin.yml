@@ -3,16 +3,30 @@ description: Secure your cloud from build to run and respond effectively with ri
 author: https://github.com/buildkite-plugins
 requirements:
   - lacework
+  - docker
 configuration:
   properties:
+    scan-type:
+        enum: [ "sca", "iac", "vulnerability","sast" ]
+    iac-scan-type:
+        enum: [ "cloudformation-scan", "kubernetes-scan", "helm-scan","terraform-scan","kustomize-scan","secrets-scan" ]
+    vulnerability-scan-repository:
+      type: string
+    vulnerability-scan-tag:
+      type: string
+    fail-level:
+      enum: [ "critical", "high", "medium","low","info" ]
     account-name:
       type: string
     api-key-env-var:
       type: string
     api-key-secret-env-var:
       type: string
+    access-token-env-var:
+      type: string
     profile:
       type: string
   required:
     - account-name
+    - scan-type
   additionalProperties: false
