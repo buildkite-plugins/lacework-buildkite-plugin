@@ -1,5 +1,5 @@
 name: Lacework
-description:  Secure your cloud from build to run and respond effectively with risk and threat insights
+description: Secure your cloud from build to run and respond effectively with risk and threat insights
 author: https://github.com/buildkite-plugins
 requirements:
   - lacework
