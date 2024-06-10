@@ -4,3 +4,8 @@ services:
     image: buildkite/plugin-tester:v4.1.1
     volumes:
       - ".:/plugin:ro"
+  lint:
+    image: buildkite/plugin-linter
+    command: ['--id', 'lacework']
+    volumes:
+      - ".:/plugin:ro"
