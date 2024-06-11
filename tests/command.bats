@@ -1,8 +1,5 @@
 #!/usr/bin/env bats
 
-# TODO: Revisit lacework.bash and tests to correct shellcheck on exports statements
-# shellcheck disable=SC2030,SC2031 
-
 # export LACEWORK_STUB_DEBUG=/dev/tty
 # export BUILDKITE_AGENT_STUB_DEBUG=/dev/tty
 
