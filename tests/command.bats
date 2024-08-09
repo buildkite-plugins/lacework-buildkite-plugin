@@ -139,8 +139,7 @@ setup() {
   unstub lacework
 }
 
-@test 'Lacework IAC SCAN with fail' {
-
+@test 'Lacework IAC SCAN with fail level set' {
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='iac'
   export BUILDKITE_PLUGIN_LACEWORK_IAC_SCAN_TYPE='kubernetes-scan'
   export BUILDKITE_PLUGIN_LACEWORK_FAIL_LEVEL='critical'
