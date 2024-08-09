@@ -92,25 +92,27 @@ setup() {
 }
 
 @test 'Lacework SAST SCAN' {
-
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='sast'
 
   export BUILDKITE_PIPELINE_SLUG='slug'
   export BUILDKITE_BUILD_NUMBER='123'
 
   stub lacework \
-    "--account myaccount --api_key key1234 --api_secret secret1234 sast scan -o lacework-sast-report-slug-123.sarif : echo 'SAST Scan'"
+    "--account myaccount --api_key key1234 --api_secret secret1234 sast scan -o lacework-sast-report-pipeline-slug-3.sarif : echo 'SAST Scan'"
 
-  #stub buildkite-agent \
-  #"artifact upload  lacework-sast-report-slug-123.sarif : echo 'SAST Scan Artifact'"
+  stub buildkite-agent \
+    "artifact upload lacework-sast-report-pipeline-slug-3.sarif : echo 'buildkite-agent: SAST Scan Artifact'" \
+    "annotate * --style success --context lacework-sast : echo 'buildkite-agent: SAST Scan Annotation'"
 
   run "${PWD}"/hooks/command
 
-  #assert_success
+  assert_success
   assert_output --partial "SAST Scan"
+  assert_output --partial "buildkite-agent: SAST Scan Artifact"
+  assert_output --partial "buildkite-agent: SAST Scan Annotation"
 
   unstub lacework
-  #unstub buildkite-agent
+  unstub buildkite-agent
 }
 
 @test 'Lacework IAC SCAN missing IAC scan type' {
