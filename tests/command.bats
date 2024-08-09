@@ -10,6 +10,8 @@ setup() {
   export BUILDKITE_PLUGIN_LACEWORK_API_KEY_SECRET_ENV_VAR=secret1234
   export BUILDKITE_PLUGIN_LACEWORK_ACCOUNT_NAME='myaccount'
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='sca'
+  export BUILDKITE_PIPELINE_SLUG='pipeline-slug'
+  export BUILDKITE_BUILD_NUMBER=3
 }
 
 @test 'Missing  API key environment variable' {
@@ -60,7 +62,7 @@ setup() {
 @test 'PROFILE test SCA' {
   unset BUILDKITE_PLUGIN_LACEWORK_API_KEY_SECRET_ENV_VAR
   unset BUILDKITE_PLUGIN_LACEWORK_API_KEY_ENV_VAR
-  export BUILDKITE_PLUGIN_LACEWORK_PROFILE=default
+  export BUILDKITE_PLUGIN_LACEWORK_PROFILE="default"
 
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='sca'
   stub lacework \
@@ -151,8 +153,7 @@ setup() {
 }
 
 @test 'Lacework VULN SCAN missing environment variables' {
-
-  BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='vulnerability'
+  export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='vulnerability'
 
   run "${PWD}"/hooks/command
 
@@ -162,8 +163,7 @@ setup() {
 }
 
 @test 'Lacework VULN SCAN' {
-
-  BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='vulnerability'
+  export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='vulnerability'
   export BUILDKITE_PLUGIN_LACEWORK_ACCESS_TOKEN_ENV_VAR='mytoken1234'
   export BUILDKITE_PLUGIN_LACEWORK_VULNERABILITY_SCAN_REPOSITORY='myrepo'
   export BUILDKITE_PLUGIN_LACEWORK_VULNERABILITY_SCAN_TAG='latest'
