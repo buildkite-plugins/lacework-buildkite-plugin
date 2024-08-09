@@ -15,29 +15,46 @@ setup() {
 @test 'Missing  API key environment variable' {
   unset BUILDKITE_PLUGIN_LACEWORK_API_KEY_ENV_VAR
 
+  stub buildkite-agent \
+    "annotate * --style error --context lacework : echo 'buildkite-agent: Error Annotation'"
+
   run "${PWD}"/hooks/command
 
   assert_failure
-  assert_output --partial 'ERROR: Missing Lacework API Key and Secret'
+  assert_output --partial "ERROR: Missing Lacework API Key and Secret or profile"
+  assert_output --partial "buildkite-agent: Error Annotation"
 
+  unstub buildkite-agent
 }
 
 @test 'Missing API key secret environment variable' {
   unset BUILDKITE_PLUGIN_LACEWORK_API_KEY_SECRET_ENV_VAR
 
+  stub buildkite-agent \
+    "annotate * --style error --context lacework : echo 'buildkite-agent: Error Annotation'"
+
   run "${PWD}"/hooks/command
 
   assert_failure
   assert_output --partial 'ERROR: Missing Lacework API Key and Secret'
+  assert_output --partial "buildkite-agent: Error Annotation"
 
+  unstub buildkite-agent
 }
 
 @test "Error if no account name was set" {
   unset BUILDKITE_PLUGIN_LACEWORK_ACCOUNT_NAME
-  run "$PWD/hooks/command"
+
+  stub buildkite-agent \
+    "annotate * --style error --context lacework : echo 'buildkite-agent: Error Annotation'"
+
+  run "${PWD}"/hooks/command
 
   assert_failure
   assert_output --partial "ERROR: Missing required config 'account-name'"
+  assert_output --partial "buildkite-agent: Error Annotation"
+
+  unstub buildkite-agent
 }
 
 @test 'PROFILE test SCA' {
