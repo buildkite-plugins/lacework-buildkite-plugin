@@ -71,6 +71,7 @@ setup() {
   run "${PWD}"/hooks/command
 
   assert_success
+  assert_output --partial "SCA Scan"
 
   unstub lacework
 
@@ -85,6 +86,7 @@ setup() {
   run "${PWD}"/hooks/command
 
   assert_success
+  assert_output --partial "SCA Scan"
 
   unstub lacework
 }
@@ -132,6 +134,7 @@ setup() {
   run "${PWD}"/hooks/command
 
   assert_success
+  assert_output --partial "IAC Scan"
 
   unstub lacework
 }
@@ -148,6 +151,7 @@ setup() {
   run "${PWD}"/hooks/command
 
   assert_success
+  assert_output --partial "IAC Scan"
 
   unstub lacework
 }
@@ -174,6 +178,7 @@ setup() {
   run "${PWD}"/hooks/command
 
   assert_success
+  assert_output --partial "Vuln Scan"
 
   unstub lacework
 }
