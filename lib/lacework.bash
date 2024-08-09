@@ -5,9 +5,9 @@ set -euo pipefail
 function configure_plugin() {
 
     # required options
-    export ACCOUNT_NAME="${BUILDKITE_PLUGIN_LACEWORK_ACCOUNT_NAME:-}"
+    ACCOUNT_NAME="${BUILDKITE_PLUGIN_LACEWORK_ACCOUNT_NAME:-}"
 
-    export SCAN_TYPE="${BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE:-}"
+    SCAN_TYPE="${BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE:-}"
 
     #validate required options
     if [ -z "${ACCOUNT_NAME}" ]; then
@@ -23,20 +23,20 @@ function configure_plugin() {
 
     #other options
 
-    export API_KEY_ENV_VAR="${BUILDKITE_PLUGIN_LACEWORK_API_KEY_ENV_VAR:-}"
+    API_KEY_ENV_VAR="${BUILDKITE_PLUGIN_LACEWORK_API_KEY_ENV_VAR:-}"
 
-    export API_KEY_SECRET_ENV_VAR="${BUILDKITE_PLUGIN_LACEWORK_API_KEY_SECRET_ENV_VAR:-}"
+    API_KEY_SECRET_ENV_VAR="${BUILDKITE_PLUGIN_LACEWORK_API_KEY_SECRET_ENV_VAR:-}"
 
     #if LW_API_KEY is defined locally, use that if the buildkite environment variable is absent
     if [ -z "${API_KEY_ENV_VAR}" ]; then
-        export API_KEY_ENV_VAR="${LW_API_KEY:-}"
+        API_KEY_ENV_VAR="${LW_API_KEY:-}"
     fi
     #if LW_API_SECRET is defined locally, use that if the buildkite environment variable is absent
     if [ -z "${API_KEY_SECRET_ENV_VAR}" ]; then
-        export API_KEY_SECRET_ENV_VAR="${LW_API_SECRET:-}"
+        API_KEY_SECRET_ENV_VAR="${LW_API_SECRET:-}"
     fi
 
-    export PROFILE="${BUILDKITE_PLUGIN_LACEWORK_PROFILE:-}"
+    PROFILE="${BUILDKITE_PLUGIN_LACEWORK_PROFILE:-}"
 
     #if profile is defined locally, use that if the buildkite environment variable is absent - not applicable for vuln scans
     if [ -z "${API_KEY_ENV_VAR}" ] || [ -z "${API_KEY_SECRET_ENV_VAR}" ]; then
@@ -49,10 +49,10 @@ function configure_plugin() {
 
     # need to export the below ENV variables for IAC to work since you can't pass those via CLI
     if [ "${SCAN_TYPE}" == "iac" ]; then
-        export IAC_SCAN_TYPE="${BUILDKITE_PLUGIN_LACEWORK_IAC_SCAN_TYPE:-}"
-        export LW_ACCOUNT="${ACCOUNT_NAME}"
-        export LW_API_KEY="${API_KEY_ENV_VAR}"
-        export LW_API_SECRET="${API_KEY_SECRET_ENV_VAR}"
+        IAC_SCAN_TYPE="${BUILDKITE_PLUGIN_LACEWORK_IAC_SCAN_TYPE:-}"
+        LW_ACCOUNT="${ACCOUNT_NAME}"
+        LW_API_KEY="${API_KEY_ENV_VAR}"
+        LW_API_SECRET="${API_KEY_SECRET_ENV_VAR}"
 
         if [ -z "${IAC_SCAN_TYPE}" ] || [ -z "${LW_ACCOUNT}" ] || [ -z "${LW_API_KEY}" ] || [ -z "${LW_API_SECRET}" ]; then
             if [ -z "${PROFILE}" ]; then
@@ -64,16 +64,16 @@ function configure_plugin() {
 
     #vuln scan related env variables
     if [ "${SCAN_TYPE}" == "vulnerability" ]; then
-        export ACCESS_TOKEN_ENV_VAR="${BUILDKITE_PLUGIN_LACEWORK_ACCESS_TOKEN_ENV_VAR:-}"
-        export VULNERABILITY_SCAN_REPOSITORY="${BUILDKITE_PLUGIN_LACEWORK_VULNERABILITY_SCAN_REPOSITORY:-}"
-        export VULNERABILITY_SCAN_TAG="${BUILDKITE_PLUGIN_LACEWORK_VULNERABILITY_SCAN_TAG:-}"
+        ACCESS_TOKEN_ENV_VAR="${BUILDKITE_PLUGIN_LACEWORK_ACCESS_TOKEN_ENV_VAR:-}"
+        VULNERABILITY_SCAN_REPOSITORY="${BUILDKITE_PLUGIN_LACEWORK_VULNERABILITY_SCAN_REPOSITORY:-}"
+        VULNERABILITY_SCAN_TAG="${BUILDKITE_PLUGIN_LACEWORK_VULNERABILITY_SCAN_TAG:-}"
         if [ -z "${ACCESS_TOKEN_ENV_VAR}" ] || [ -z "${VULNERABILITY_SCAN_REPOSITORY}" ] || [ -z "${VULNERABILITY_SCAN_TAG}" ]; then
             echo "ERROR: Missing config related to vulnerability scans. Need the following: ACCESS_TOKEN_ENV_VAR, VULNERABILITY_SCAN_REPOSITORY, VULNERABILITY_SCAN_TAG" >&2
             exit 1
         fi
     fi
 
-    export FAIL_LEVEL="${BUILDKITE_PLUGIN_LACEWORK_FAIL_LEVEL:-}"
+    FAIL_LEVEL="${BUILDKITE_PLUGIN_LACEWORK_FAIL_LEVEL:-}"
 
 }
 
