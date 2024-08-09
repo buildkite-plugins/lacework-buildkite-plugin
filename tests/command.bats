@@ -64,7 +64,6 @@ setup() {
   unset BUILDKITE_PLUGIN_LACEWORK_API_KEY_ENV_VAR
   export BUILDKITE_PLUGIN_LACEWORK_PROFILE="default"
 
-  export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='sca'
   stub lacework \
     "--profile default sca scan . --save-results : echo 'SCA Scan'"
 
@@ -74,12 +73,10 @@ setup() {
   assert_output --partial "SCA Scan"
 
   unstub lacework
-
 }
 
 @test 'Lacework SCA SCAN' {
 
-  export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='sca'
   stub lacework \
     "--account myaccount --api_key key1234 --api_secret secret1234 sca scan . --save-results : echo 'SCA Scan'"
 
@@ -93,9 +90,6 @@ setup() {
 
 @test 'Lacework SAST SCAN' {
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='sast'
-
-  export BUILDKITE_PIPELINE_SLUG='slug'
-  export BUILDKITE_BUILD_NUMBER='123'
 
   stub lacework \
     "--account myaccount --api_key key1234 --api_secret secret1234 sast scan -o lacework-sast-report-pipeline-slug-3.sarif : echo 'SAST Scan'"
@@ -116,7 +110,6 @@ setup() {
 }
 
 @test 'Lacework IAC SCAN missing IAC scan type' {
-
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='iac'
 
   run "${PWD}"/hooks/command
@@ -126,7 +119,6 @@ setup() {
 }
 
 @test 'Lacework IAC SCAN' {
-
   export BUILDKITE_PLUGIN_LACEWORK_SCAN_TYPE='iac'
   export BUILDKITE_PLUGIN_LACEWORK_IAC_SCAN_TYPE='kubernetes-scan'
 
@@ -163,7 +155,6 @@ setup() {
   run "${PWD}"/hooks/command
 
   assert_failure
-
   assert_output --partial "ERROR: Missing config related to vulnerability scans"
 }
 
